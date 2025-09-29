@@ -35,7 +35,7 @@ jobs:
       - name: Run correlation script
         run: python correlacion_github.py --input "${{ steps.pick.outputs.CSV }}" --output output
 
-      - name: Upload results (artifact: resultados-correlacion)
+      - name: Upload results as artifact
         uses: actions/upload-artifact@v4
         with:
           name: resultados-correlacion
