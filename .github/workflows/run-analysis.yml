@@ -1,11 +1,9 @@
 name: Run correlation analysis
-
 on:
   workflow_dispatch:
   push:
     branches:
       - main
-
 jobs:
   run-analysis:
     runs-on: ubuntu-latest
@@ -18,10 +16,11 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Upgrade pip and install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
+      - name: Upgrade pip
+        run: python -m pip install --upgrade pip
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
 
       - name: Create output folder
         run: mkdir -p output
@@ -29,7 +28,7 @@ jobs:
       - name: Pick latest CSV
         id: pick
         shell: bash
-        run: echo "CSV=$(ls -t data/*.csv | head -n 1)" >> "$GITHUB_OUTPUT"
+        run: echo "CSV=$(ls -t data/*.csv | head -n 1)" >> $GITHUB_OUTPUT
 
       - name: Run correlation script
         run: python correlacion_github.py --input "${{ steps.pick.outputs.CSV }}" --output output
